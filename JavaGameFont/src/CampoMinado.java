@@ -5,13 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class CampoMinado extends JFrame {
 
+
+public class CampoMinado extends JFrame {
 
     private static int SIZE;
     private static int MINES;
@@ -24,7 +24,6 @@ public class CampoMinado extends JFrame {
     private Timer timer;
     private double elapsedTime;
     private boolean isTimerRunning;
-
 
     static {
         // Lê o tamanho do tabuleiro e a quantidade de minas a partir de um arquivo txt
@@ -72,9 +71,10 @@ public class CampoMinado extends JFrame {
             for (int col = 0; col < SIZE; col++) {
                 buttons[row][col] = new JButton();
                 buttons[row][col].setMargin(new Insets(0, 0, 0, 0));
-                buttons[row][col].addActionListener(new ButtonClickListener(row, col)); //Adiciona para abrir os quadrados
+                buttons[row][col].addActionListener(new ButtonClickListener(row, col)); // Adiciona para abrir os
+                                                                                        // quadrados
                 buttons[row][col].addMouseListener(new FlagListener(row, col)); // Adiciona para marcar as bombas
-                boardPanel.add(buttons[row][col]); //Adiciona o quadrado para clicar nas bombas
+                boardPanel.add(buttons[row][col]); // Adiciona o quadrado para clicar nas bombas
             }
         }
 
@@ -120,13 +120,12 @@ public class CampoMinado extends JFrame {
         return count;
     }
 
-
     private void initializeTimer() {
         timer = new Timer(1, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 elapsedTime++;
-                timeLabel.setText("Time: " + String.format("%.2f", elapsedTime/1000));
+                timeLabel.setText("Time: " + String.format("%.2f", elapsedTime / 1000));
             }
         });
     }
@@ -160,18 +159,18 @@ public class CampoMinado extends JFrame {
                 } while (mines[row][col] || neighbors[row][col] != 0);
             }
 
-            if (mines[row][col]) { //Jogador pisou em uma mina
+            if (mines[row][col]) { // Jogador pisou em uma mina
                 buttons[row][col].setText("Mine");
                 buttons[row][col].setBackground(Color.RED);
                 timer.stop();
                 JOptionPane.showMessageDialog(null, "Game Over!");
                 try {
-                    showScoreboard(); //Mostra a scoreboard
+                    showScoreboard(); // Mostra a scoreboard
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 System.exit(0);
-            } else { //Jogador acertou o quadrado
+            } else { // Jogador acertou o quadrado
                 if (neighbors[row][col] == 0) {
                     buttons[row][col].setText("");
                 } else {
@@ -181,23 +180,24 @@ public class CampoMinado extends JFrame {
 
                 // Abre as minas em volta se o valor da mina for 0
                 openNeighbourMine(row, col);
-                // Verifica se o jogador colocou todas as minas no lugar certo para testar vitória
-                if (countOpenedSquares() >= SIZE * SIZE - MINES) { //Jogador venceu o jogo
+                // Verifica se o jogador colocou todas as minas no lugar certo para testar
+                // vitória
+                if (countOpenedSquares() >= SIZE * SIZE - MINES) { // Jogador venceu o jogo
                     timer.stop();
-                    JOptionPane.showMessageDialog(null, "Você ganhou! " + elapsedTime/1000 + " segundos");
+                    JOptionPane.showMessageDialog(null, "Você ganhou! " + elapsedTime / 100 + " segundos");
                     String nomeJogador = JOptionPane.showInputDialog("Digite seu nome:");
 
-                    //Exporta para um txt
-                    try {
-                        File fileWrite = new File("resultados.txt");
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(fileWrite, StandardCharsets.UTF_8, true));
-                        writer.write("\n");
-                        writer.write("Mina = " + MINES + " SIZE = " + SIZE + "\n");
-                        writer.write(nomeJogador + ": " + elapsedTime / 1000 + "\n");
-                        writer.close();
+                    // Cria um objeto Jogador
+                    Jogador jogador = new Jogador(nomeJogador, elapsedTime / 100);
+
+                    // Exporta o objeto para um arquivo
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter("resultados.txt", true))) {
+                        writer.write(jogador.toString());
+                        writer.newLine();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                }
 
                     try {
                         showScoreboard();
@@ -205,12 +205,9 @@ public class CampoMinado extends JFrame {
                         throw new RuntimeException(ex);
                     }
 
-
-
                     System.exit(0);
                 }
             }
-        }
 
         public void showScoreboard() throws IOException {
 
@@ -219,13 +216,12 @@ public class CampoMinado extends JFrame {
             String line;
             StringBuilder scoresheet;
             scoresheet = new StringBuilder();
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 scoresheet.append(line);
                 scoresheet.append('\n');
             }
             JOptionPane.showMessageDialog(null, scoresheet.toString());
             reader.close();
-
 
         }
 
