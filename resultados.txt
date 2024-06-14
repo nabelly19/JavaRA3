@@ -1,3 +1,7 @@
 tgyhj 16.05segundos 10X10Minas = 10
 dd 10.93segundos 10X10Minas = 10
 n 3.28segundos 5X5Minas = 1
+pai 2.57segundos 5X5Minas = 1
+padraoentao 0.0segundos 5X5Minas = 1
+hijmioj 17.79segundos 10X10Minas = 10
+NOME 18.26segundos 10X10Minas = 10

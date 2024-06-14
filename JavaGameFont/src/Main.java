@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CampoMinadoException, JogadorException{
 
         // Cria o arquivo txt com as configurações do game, se estiver vazio
         try {
@@ -21,7 +21,9 @@ public class Main {
                 System.out.println("O arquivo não está vazio. Nenhum dado foi escrito.");
             }
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            throw new CampoMinadoException("Erro ao manipular arquivo", ex);
+        } catch (NumberFormatException  ex) {
+            throw new JogadorException("Erro ao manipular arquivo", ex);
         }
 
         // Inicia a interface gráfica do jogo
