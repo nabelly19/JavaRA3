@@ -1,1 +1,3 @@
-Jogador{nome='a', score=1.03}
+tgyhj 16.05segundos 10X10Minas = 10
+dd 10.93segundos 10X10Minas = 10
+n 3.28segundos 5X5Minas = 1

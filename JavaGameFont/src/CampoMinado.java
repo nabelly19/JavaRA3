@@ -13,8 +13,8 @@ import java.util.Set;
 
 public class CampoMinado extends JFrame {
 
-    private static int SIZE;
-    private static int MINES;
+    public static int SIZE;
+    public static int MINES;
     private JButton[][] buttons;
     private boolean[][] mines;
     private int[][] neighbors;
@@ -164,13 +164,15 @@ public class CampoMinado extends JFrame {
                 buttons[row][col].setBackground(Color.RED);
                 timer.stop();
                 JOptionPane.showMessageDialog(null, "Game Over!");
+                System.exit(0);
                 try {
                     showScoreboard(); // Mostra a scoreboard
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 System.exit(0);
-            } else { // Jogador acertou o quadrado
+            } 
+            else { // Jogador acertou o quadrado
                 if (neighbors[row][col] == 0) {
                     buttons[row][col].setText("");
                 } else {
@@ -180,10 +182,13 @@ public class CampoMinado extends JFrame {
 
                 // Abre as minas em volta se o valor da mina for 0
                 openNeighbourMine(row, col);
+            }
                 // Verifica se o jogador colocou todas as minas no lugar certo para testar
                 // vitória
+                
                 if (countOpenedSquares() >= SIZE * SIZE - MINES) { // Jogador venceu o jogo
                     timer.stop();
+                    System.out.println(countOpenedSquares());
                     JOptionPane.showMessageDialog(null, "Você ganhou! " + elapsedTime / 100 + " segundos");
                     String nomeJogador = JOptionPane.showInputDialog("Digite seu nome:");
 
@@ -197,7 +202,7 @@ public class CampoMinado extends JFrame {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                }
+                
 
                     try {
                         showScoreboard();
@@ -205,8 +210,8 @@ public class CampoMinado extends JFrame {
                         throw new RuntimeException(ex);
                     }
 
-                    System.exit(0);
-                }
+                    System.exit(0);}
+                
             }
 
         public void showScoreboard() throws IOException {

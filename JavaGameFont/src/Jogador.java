@@ -19,9 +19,10 @@ public class Jogador implements Serializable {
 
     @Override
     public String toString() {
-        return "Jogador{" +
-                "nome='" + nome + '\'' +
-                ", score=" + score +
-                '}';
+
+        return 
+                 nome + " " 
+                 + score + "segundos " +
+                CampoMinado.SIZE + "X" + CampoMinado.SIZE + "Minas = " + CampoMinado.MINES;
     }
 }
